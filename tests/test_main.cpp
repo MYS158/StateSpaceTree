@@ -105,6 +105,20 @@ static void test_tree_cost_to_missing_edge() {
     assert(!tree.cost_to(lvl2[0]).has_value());
 }
 
+static void test_tree_path_to_root() {
+    Tree<int> tree(7);
+    auto path = tree.path_to(tree.root());
+    assert(path.size() == 1);
+    assert(path[0]->state() == 7);
+}
+
+static void test_tree_cost_to_root() {
+    Tree<int> tree(0);
+    auto cost = tree.cost_to(tree.root());
+    assert(cost.has_value());
+    assert(*cost == 0.0);
+}
+
 int main() {
     test_node_root();
     test_node_child();
@@ -115,8 +129,10 @@ int main() {
     test_tree_root();
     test_tree_expand();
     test_tree_path_to();
+    test_tree_path_to_root();
     test_tree_cost_to_weighted();
     test_tree_cost_to_missing_edge();
+    test_tree_cost_to_root();
 
     return 0;
 }
