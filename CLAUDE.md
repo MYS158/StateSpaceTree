@@ -19,11 +19,13 @@ docs/           # Project documentation
 
 ## Key Design Decisions
 
-- **Strategy pattern for traversals:** abstract `SearchStrategy` base; BFS, DFS, backtracking, UCS built-in; programmers subclass for custom strategies
-- **Edge weights:** `std::optional` — unweighted problems pass nothing; engine degrades gracefully
-- **Engine is templated** on state type and optional weight type — knows nothing about problem internals
+- **Strategy pattern for traversals:** abstract `SearchStrategy` base; BFS, DFS, backtracking, UCS built-in; programmers subclass for custom strategies — all interchangeable
+- **Edge weights:** `std::optional<Weight>` — unweighted problems pass nothing; engine degrades gracefully
+- **Engine templated** on state type and weight type — knows nothing about problem internals
 - **Problem adapters** in `examples/` implement a common interface: initial state, goal test, successor function, optional edge cost
-- **CLI layer** in `cli/` owns menu and arg parsing; never touches engine internals directly
+- **Path reconstruction:** returns ordered node list from root to goal; accumulates cumulative cost when weights present
+- **ANSI console output:** tree structure and solution path rendered with color-coded nodes, edges, and solution path; Windows VT mode enabled via `SetConsoleMode` at startup
+- **CLI layer** in `cli/` — interactive numbered menu when run with no args; `--problem` and `--strategy` flags for scripting; both modes produce identical output
 
 ## Build
 
@@ -47,7 +49,7 @@ cmake --build build && ctest --test-dir build
 
 ## Conventions
 
-- C++17, `-Wall -Wextra`, zero warnings on MSVC and GCC
+- C++17, `-Wall -Wextra -Wpedantic -Werror`, zero warnings on MSVC (`/W4 /WX`) and GCC
 - One-line doc comment on every public class/function
 - No raw owning pointers (`std::unique_ptr` / `std::shared_ptr`)
 - Max line length: 100 characters
@@ -69,7 +71,7 @@ A* and greedy search are explicitly out of scope.
 
 ## Non-Goals
 
-- No GUI — console only (ANSI colors permitted)
-- No A* / greedy (heuristic-based) search
+- No windowed GUI — console only; ANSI colors permitted (Windows VT mode enabled via `SetConsoleMode` at startup)
+- No heuristic/informed search — A* and greedy are out of scope; UCS is allowed (no heuristic required)
 - No third-party libraries
 - No runtime plugin loading
