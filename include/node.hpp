@@ -11,9 +11,9 @@ class Node {
 public:
     /// Constructs a root node with no parent and no edge cost.
     explicit Node(State state)
-        : state_(std::move(state)), parent_(nullptr), depth_(0) {}
+        : state_(std::move(state)), parent_(nullptr), cost_(std::nullopt), depth_(0) {}
 
-    /// Constructs a child node linked to a parent with an optional edge cost.
+    /// Constructs a child node; parent must be non-null and must outlive this node.
     Node(State state, Node* parent, std::optional<Weight> cost = std::nullopt)
         : state_(std::move(state)),
           parent_(parent),
@@ -35,7 +35,7 @@ public:
     /// Returns the children owned by this node.
     const std::vector<std::unique_ptr<Node>>& children() const { return children_; }
 
-    /// Appends a child node and returns a non-owning pointer to it.
+    /// Appends a child node; returned pointer valid only while this node is alive.
     Node* add_child(std::unique_ptr<Node> child) {
         children_.push_back(std::move(child));
         return children_.back().get();
