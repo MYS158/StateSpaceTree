@@ -54,4 +54,4 @@ The engine must support:
 - All search strategies produce correct, reproducible paths on both example problems
 - No memory errors under AddressSanitizer
 - Each public class/function has a single-line doc comment
-- `cmake --build` succeeds clean on MSVC and GCC with `-Wall -Wextra`
+- `cmake --build` succeeds clean on MSVC and GCC with `-Wall -Wextra -Wpedantic -Werror`
