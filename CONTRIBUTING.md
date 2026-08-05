@@ -18,7 +18,7 @@
 | `docs/` | Documentation |
 | `refactor/` | Refactor — no behavior change |
 
-Always branch off `main`. Name: `feat/short-description`.
+Always branch off `master`. Name: `feat/short-description`.
 
 ## Commits
 
@@ -40,7 +40,7 @@ Subject ≤ 50 chars. Body only when the "why" is not in the diff.
 - Link issue: `Closes #N` in PR body
 - At least one review before merge (human or `/code-review`)
 - CI must pass: build + tests + ASan
-- Squash-merge to keep `main` history linear
+- Squash-merge to keep `master` history linear
 
 ## Definition of Done
 
