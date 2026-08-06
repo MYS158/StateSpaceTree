@@ -13,6 +13,16 @@ endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+option(ENABLE_ASAN "Enable AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
+if(ENABLE_ASAN)
+    if(MSVC)
+        add_compile_options(/fsanitize:address)
+    else()
+        add_compile_options(-fsanitize=address,undefined)
+        add_link_options(-fsanitize=address,undefined)
+    endif()
+endif()
+
 add_subdirectory(src)
 add_subdirectory(cli)
 add_subdirectory(examples)
