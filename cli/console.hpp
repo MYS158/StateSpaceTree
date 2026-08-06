@@ -22,6 +22,6 @@ inline void enable_ansi() {
     DWORD mode = 0;
     if (GetConsoleMode(h, &mode))
         SetConsoleMode(h, mode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
-    SetConsoleOutputCP(CP_UTF8);
+    (void)SetConsoleOutputCP(CP_UTF8);
 #endif
 }
