@@ -24,12 +24,14 @@
     } while (0)
 
 // Returns 0 if all tests passed, 1 otherwise. Call at end of main().
-#define TEST_RESULTS()                                                                      \
-    (std::printf("\n%d/%d passed\n",                                                        \
-        ::sst_test::g_total - ::sst_test::g_failures, ::sst_test::g_total),                \
-     ::sst_test::g_failures > 0 ? 1 : 0)
+#define TEST_RESULTS() ::sst_test::test_results()
 
 namespace sst_test {
     inline int g_failures = 0;
     inline int g_total    = 0;
+
+    inline int test_results() {
+        std::printf("\n%d/%d passed\n", g_total - g_failures, g_total);
+        return g_failures > 0 ? 1 : 0;
+    }
 }
