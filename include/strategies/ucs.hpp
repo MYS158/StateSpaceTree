@@ -8,7 +8,8 @@ class UCS : public SearchStrategy<State, Weight> {
 public:
     /// Searches tree by cumulative cost; returns minimum-cost path root→goal or nullopt.
     std::optional<std::vector<Node<State, Weight>*>>
-    solve(Tree<State, Weight>&, const Problem<State, Weight>&) override {
+    solve([[maybe_unused]] Tree<State, Weight>& tree,
+          [[maybe_unused]] const Problem<State, Weight>& problem) override {
         return std::nullopt;
     }
 };

@@ -13,7 +13,7 @@ class SearchStrategy {
 public:
     virtual ~SearchStrategy() = default;
 
-    /// Searches tree for a goal node defined by problem.
+    /// Searches tree for a goal node defined by problem; expands tree in place during search.
     /// tree must be constructed with problem.initial_state() as root before calling.
     /// Returns path root→goal (inclusive) or nullopt if no solution exists.
     virtual std::optional<std::vector<Node<State, Weight>*>>
